@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Your page title here :)</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+
+  <!-- Favicon
+
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+<body>
+
+
+  <div class="container">
+     <div id="app">
+     <h3>Ninja Notes</h3>
+     <img src="img/ninjanotes.png"/>
+    <div class="row">
+      <div>
+        <input ref="missioninput" v-on:keyup.13="handleClick" v-model="additionalMission" id="textinput" class="form-control eight columns" type="text">
+    <input v-on:click="handleClick" class="btn two columns offset-by-one" type="submit" value="Add">
+    <table class="table">
+      <thead>
+      <th>Mission</th>
+      <th></th>
+    </thead>
+  </table>
+       
+      <mission-item  v-bind:my-mission="shownMissions"></mission-item>
+
+        </div>
+        <a id="savescroll" href="" v-on:click="saveMissions">Save Scroll?</a>
+        <div class="pop-up" v-if="seen">
+          <p>Saved! Start a new scroll or continue with the current one?</p>
+          <div class="buttons">
+            <button v-on:click="resetScroll" type="button">New Scroll</button>
+            <button v-on:click="closeDialog" type="button">Continue</button>
+          </div>
+        </div>
+      </div>
+      <ul class="pagination"><li v-for="page in totalPages"><a v-on:click="changePage(page)" v-bind:class="{ active: currentPage == page }" >{{ page }}</a></li></ul>
+    </div>
+  </div>
+
+<script type="text/javascript" type="module" src="js/script.js"></script>
+</body>
+</html>

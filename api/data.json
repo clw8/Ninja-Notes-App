@@ -1,0 +1,18 @@
+{"peeps": [{
+	"name": "Jon",
+	"age": "35",
+	"pets": "WOLF",
+	"hobbies": "fishing"
+},
+{
+	"name": "Popeye",
+	"age": "32",
+	"pets": "Spinach can",
+	"hobbies": "Weight lifting"
+},
+{
+	"name": "Brian",
+	"age": "28",
+	"pets": "none",
+	"hobbies": "THE UNIVERSE!!!!!"
+}]}
