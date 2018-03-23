@@ -5,7 +5,7 @@
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
-  <title>Your page title here :)</title>
+  <title>Ninja Notes</title>
   <meta name="description" content="">
   <meta name="author" content="">
 
@@ -31,16 +31,32 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-</head>
-<body>
+</head>  
 
+<body class="container" id="container-body">
+ <div id="app">
+  <div  class="flex">
+  <h3 class="">Ninja Notes</h3> 
+  <a id="about" v-on:click="aboutseen=true">About</a>
+</div>
+ 
+    <div class="container">
 
-  <div class="container">
-     <div id="app">
-     <h3>Ninja Notes</h3>
-     <img src="img/ninjanotes.png"/>
     <div class="row">
-      <div>
+       <div class="pop-up bg-dark" v-if="aboutseen">
+                  <a id="close-about" v-on:click="aboutseen=false">x</a>
+
+          <img src="img/ninjanotes.png"/>
+          <p>This app was created with Vue.js, as a learning experiment.<br>
+            This app uses a RESTful API, enabling the storing and loading<br>
+            of data from the server using JSON. The server-side code uses <br> 
+            Node.js and Express.js, and calls the GET/POST calls from the <br>
+            client-side are made using the Axios HTTP client.
+          </p>
+        </div>
+  
+
+      <div class="widthfull">
         <input ref="missioninput" v-on:keyup.13="handleClick" v-model="additionalMission" id="textinput" class="form-control eight columns" type="text">
     <input v-on:click="handleClick" class="btn two columns offset-by-one" type="submit" value="Add">
     <table class="table">
@@ -50,22 +66,50 @@
     </thead>
   </table>
        
-      <mission-item  v-bind:my-mission="shownMissions"></mission-item>
+      <mission-item  v-bind:my-missions="missions" v-on:missiondelete="deleteMission"></mission-item>
 
+    </div>
+        <a id="savescroll" class="options" href="" v-on:click="function(e){e.preventDefault(); saveinputseen=true;}">Save Scroll?</a>
+      
+        <div class="pop-up bg-dark" v-if="saveinputseen">
+          <p>{{saveScrollText}}</p>
+          <input  v-on:keyup.13="XHRsendMissions" v-model="scrollName" class="textinput form-control" type="text">
+          <div class="buttons">
+            <button v-on:click="XHRsendMissions" type="button">Save</button>
+            <button v-on:click="closeDialog" type="button">Cancel</button>
+          </div>
         </div>
-        <a id="savescroll" href="" v-on:click="saveMissions">Save Scroll?</a>
-        <div class="pop-up" v-if="seen">
+        <div class="pop-up bg-dark" v-if="savedseen">
           <p>Saved! Start a new scroll or continue with the current one?</p>
           <div class="buttons">
             <button v-on:click="resetScroll" type="button">New Scroll</button>
             <button v-on:click="closeDialog" type="button">Continue</button>
           </div>
         </div>
+
+      <a id="loadscroll" class="options" href="" v-on:click="function(e){e.preventDefault(); loadseen=true;}">Load Scroll?</a>
+      
+      <div class="pop-up bg-dark" v-if="loadseen">
+        <p>Scroll name:</p>
+        <input  v-on:keyup.13="XHRloadMissions" v-model="scrollNameLoad" class="textinput form-control" type="text">
+        <div class="buttons">
+          <button v-on:click="XHRloadMissions" type="button">Load</button>
+          <button v-on:click="closeDialog" type="button">Cancel</button>
+        </div>
       </div>
-      <ul class="pagination"><li v-for="page in totalPages"><a v-on:click="changePage(page)" v-bind:class="{ active: currentPage == page }" >{{ page }}</a></li></ul>
+      <div class="pop-up bg-dark" v-if="errorseen">
+        <p>{{error}}</p>
+        <div class="buttons">
+          <button v-on:click="closeDialog" type="button">OK</button>
+        </div>
+      </div>
+
+
+      </div>
+
     </div>
   </div>
 
-<script type="text/javascript" type="module" src="js/script.js"></script>
+<script type="text/javascript" src="build.js"></script>
 </body>
 </html>
