@@ -4,10 +4,11 @@ var path = require('path');
 var fs = require('fs');
 var jsonfilepath = path.join(__dirname, 'public', 'data.json');
 var bodyParser = require('body-parser');
+
+var port = process.env.PORT || 3000;
+
 var EventEmitter = require('events');
-
 class MyEmitter extends EventEmitter {}
-
 const myEmitter = new MyEmitter();
 
 app.use(express.static("./public"));
@@ -78,7 +79,7 @@ function updateMissions(req, res){
 
 myEmitter.on('connect', function(){console.log('API call made')});
 
-app.listen(3000);
+app.listen(port);
 
 function filter_json(jsonObj, scrollName){
 	return jsonObj.filter(function(obj){
