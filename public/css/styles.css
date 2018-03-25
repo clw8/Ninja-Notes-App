@@ -122,6 +122,30 @@ align-self: center;
 display:inline-block;
 
 }
+
+.fade-enter-active  {
+  transition: transform 0.3s;
+    transform-origin:top;
+}
+
+.fade-leave-active  {
+  transition: transform 0.3s;
+    transform-origin:top;
+}
+
+.fade-enter, .fade-leave-to {
+  transform:scaleY(0); 
+  transform-origin:top;
+
+}
+
+
+.optionsdiv{display:flex;
+	flex-flow:column;
+justify-content: flex-start;
+overflow: hidden;
+}
+
 @media(max-width:768px){
 	img{width:100%;}
 	#container-body{width:100% !important;}

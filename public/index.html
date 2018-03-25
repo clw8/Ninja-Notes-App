@@ -66,7 +66,7 @@
     </thead>
   </table>
        
-      <mission-item  v-bind:my-missions="missions" v-on:missiondelete="deleteMission"></mission-item>
+      <mission-item  v-bind:my-missions="missions" v-on:missiondelete="deleteMission" v-on:saveedit="saveEdit"></mission-item>
 
     </div>
         <a id="savescroll" class="options" href="" v-on:click="function(e){e.preventDefault(); saveinputseen=true;}">Save Scroll?</a>

@@ -6,8 +6,28 @@ Vue.component('mission-item', {
 	template: `<div>
 					<table>
 						<tr v-for="(mission, index) in shownMissions">
-							<td class="eight columns">{{ mission }}</td>
-							<button v-on:click="deleteMission(index)">Delete?</button>
+							<transition name="fade" mode="out-in">
+							<td class="eight columns">
+								<p v-if="(optionsIndex!==index) ||  (optionsIndex==index && editmode==false)">{{ mission }}</p>
+								<input v-if="optionsIndex==index && editmode==true" v-model="editNew"></input>
+							</td>
+							</transition>
+							<transition name="fade" mode="out-in">
+							<button v-if="optionsIndex!==index" v-on:click="optionsIndex=index">Options</button>
+							
+
+							
+							<button v-if="optionsIndex==index && editmode==true" v-on:click="saveEdit(editNew, index)">Save</button>
+							
+							
+							
+							<div class="optionsdiv" v-if="optionsIndex==index && editmode==false">
+								<button v-on:click="editMission(mission, index)">Edit</button>
+								<button v-on:click="deleteMission(index)">Delete</button>
+								<button v-on:click="optionsIndex=null">Cancel</button>
+							</div>
+							</transition>
+
 						</tr>
 					</table>
 			      	<ul class="pagination" v-if="showPagination">
@@ -22,6 +42,10 @@ Vue.component('mission-item', {
 			missionsPerPage:7,
 			showPagination:false,
 			readyForCurrentPageChange: false,
+			optionsIndex:null,
+			editmode: false,
+			editNew: "",
+			options:false
 				}
 	},
 	methods: {
@@ -33,6 +57,16 @@ Vue.component('mission-item', {
 		changePage(page){
 				this.currentPage=page;
 		},
+		editMission(mission, index){
+			this.editnew=mission;
+			this.editmode=true;
+		},
+		saveEdit(edit, index){
+			this.$emit('saveedit', {index: index, edit: edit});
+			this.optionsIndex=null;
+			this.editNew="";
+			this.editmode=false;
+		}
 	},
 	computed: {
 		shownMissionsStartIndex: function(){
@@ -85,7 +119,7 @@ var vm = new Vue({
 		loadseen: false,
 		errorseen:false,
 		error:"",
-		aboutseen: false
+		aboutseen: false,
 	},
 	methods: {
 		handleClick(e){
@@ -138,6 +172,9 @@ var vm = new Vue({
 				console.log("DELETED MOFOPFOOOO! Index:" + payload);
 				this.missions.splice(payload, 1);
 
+		},
+		saveEdit(payload){
+			this.missions.splice(payload.index, 1, payload.edit);
 		},
 		resetScroll(){
 			this.savedseen=false;
