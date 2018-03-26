@@ -11,7 +11,7 @@ var EventEmitter = require('events');
 class MyEmitter extends EventEmitter {}
 const myEmitter = new MyEmitter();
 
-app.use(express.static("./public"));
+app.use(express.static("./"));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -23,7 +23,7 @@ app.use(function(req, res, next){
 
 app.get('/api', function(req, res){
 	
-	fs.readFile("./public/data.json", function(err, data){
+	fs.readFile("./src/data.json", function(err, data){
 			var parseddata = JSON.parse(data);
 			var queryString = req.query.scroll;
 			var data= filter_json(parseddata, queryString);
@@ -43,7 +43,7 @@ app.post('/api', updateMissions);
 function updateMissions(req, res){
 	console.log(req.body);
 
-	fs.readFile("./public/data.json", function(err, data){
+	fs.readFile("./src/data.json", function(err, data){
 		var currentData = JSON.parse(data);
 		
 		var DupData = filter_json(currentData, req.body.scroll);
